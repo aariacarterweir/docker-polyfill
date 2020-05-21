@@ -4,4 +4,4 @@
 . config.sh
 
 docker container stop "$CONTAINER_NAME"
-docker system prune --force
+docker rm "$CONTAINER_NAME"

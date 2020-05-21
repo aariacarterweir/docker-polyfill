@@ -23,15 +23,13 @@ WORKDIR /polyfill
 # set eng and args
 ENV PORT 3000
 ARG POLYFILL_TAG='v4.32.2'
-ARG NODE_ENV='production'
-ENV PATH="/polyfill/node_modules/.bin/:${PATH}"
 
 # clone repo
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
 
 # Install npm packages
 RUN npm install
-RUN npm install -g npm-run-all
+RUN export PATH="$(npm bin):${PATH}"
 
 # Build
 RUN npm run build
@@ -46,4 +44,4 @@ EXPOSE ${PORT}
 ENTRYPOINT ["npm", "run", "start"]
 
 # Uncomment to debug
-#CMD tail -f /dev/null
+CMD tail -f /dev/null
