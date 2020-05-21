@@ -6,7 +6,7 @@ RUN apk update
 RUN apk add --no-cache \
     bash \
     nodejs \
-    yarn
+    npm
 
 # add virtual packages
 RUN apk add --no-cache --virtual \
@@ -24,22 +24,17 @@ WORKDIR /polyfill
 ENV PORT 3000
 ARG POLYFILL_TAG='v4.32.2'
 ARG NODE_ENV='production'
+ENV PATH="/polyfill/node_modules/.bin/:${PATH}"
 
-# clone repo and clean up
+# clone repo
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
-RUN rm -rf .git
 
-# Import yarn packages
-RUN yarn import
+# Install npm packages
+RUN npm install --production
+RUN npm install -g run-s
 
-# Replace some stuff in start_server.sh
-RUN sed -i.bak -e 's,^node,exec node,' start_server.sh
-
-# Move the start_server script to the /bin dir
-RUN	mv start_server.sh /bin/
-
-# Permissions
-RUN chmod a+x /bin/start_server.sh
+# Build
+RUN npm run build
 
 # Apk clean up
 RUN apk del build
@@ -47,8 +42,8 @@ RUN apk del build
 # Expose port
 EXPOSE ${PORT}
 
-# spin up
-CMD ["/bin/start_server.sh", "server/index.js"]
+# Set entry point
+ENTRYPOINT ["npm", "run", "start"]
 
 # Uncomment to debug
 #CMD tail -f /dev/null
