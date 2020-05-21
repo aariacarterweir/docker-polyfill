@@ -8,6 +8,7 @@ RUN apk update
 RUN apk add \
     nodejs \
     npm \
+    yarn \
     git
 
 # Clone repo
@@ -19,16 +20,17 @@ WORKDIR /app
 # Chmod
 RUN chmod -R 755 /app/
 
-# Install packages
-RUN npm install -g grunt-cli
-RUN npm install
-
-# GRUNT IT UP
-RUN npm run build
-
 # Set env
 ENV NODE_OPTIONS "--max-old-space-size=4112"
 ENV NODE_ENV prod
+
+# Install packages
+RUN yarn import
+RUN yarn
+RUN yarn add grunt-cli
+
+# GRUNT IT UP
+RUN yarn run build
 
 # Expose Ports
 EXPOSE 3000
