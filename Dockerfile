@@ -1,47 +1,54 @@
-# Extend the latest ubuntu image
+# Extend latest alpine image
 FROM alpine:latest
 
-# Update / Upgrade apk
+# update and add packages
 RUN apk update
-
-# Install apk packages
-RUN apk add \
+RUN apk add --no-cache \
+    bash \
     nodejs \
-    yarn \
-    git
+    yarn
 
-# Clone repo
-RUN git clone -b v4.32.2 --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" /app/
+# add virtual packages
+RUN apk add --no-cache --virtual \
+    build \
+    git \
+    python \
+    make \
+    gcc \
+    g++
 
-# Set a working directory
-WORKDIR /app
+# workdir
+WORKDIR /polyfill
 
-# Chmod
-RUN chmod -R 755 /app/
+# set eng and args
+ENV PORT 3000
+ARG POLYFILL_TAG='v4.32.2'
+ARG NODE_ENV='production'
 
-# update path
-RUN export PATH="$(yarn global bin):$PATH"
+# clone repo and clean up
+RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
+RUN rm -rf .git
 
-# Set env
-ENV NODE_OPTIONS "--max-old-space-size=4112"
-ENV NODE_ENV prod
-
-# Install packages
-RUN yarn global add snyk
+# Import yarn packages
 RUN yarn import
-RUN yarn
 
-## Build it
-#RUN yarn run build
-#
-## Expose Ports
-#EXPOSE 3000
-#
-## Clean up
-#RUN rm /var/cache/apk/*
-#
-## Set entrypoint to "sh"
-#ENTRYPOINT ["sh"]
+# Replace some stuff in start_server.sh
+RUN sed -i.bak -e 's,^node,exec node,' start_server.sh
 
-# Keep alive
+# Move the start_server script to the /bin dir
+RUN	mv start_server.sh /bin/
+
+# Permissions
+RUN chmod a+x /bin/start_server.sh
+
+# Apk clean up
+RUN apk del build
+
+# Expose port
+EXPOSE ${PORT}
+
+# spin up
+CMD ["/bin/start_server.sh", "server/index.js"]
+
+# Uncomment to debug
 #CMD tail -f /dev/null
