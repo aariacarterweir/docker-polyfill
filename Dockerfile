@@ -7,7 +7,6 @@ RUN apk update
 # Install apk packages
 RUN apk add \
     nodejs \
-    npm \
     yarn \
     git
 
@@ -20,22 +19,29 @@ WORKDIR /app
 # Chmod
 RUN chmod -R 755 /app/
 
+# update path
+RUN export PATH="$(yarn global bin):$PATH"
+
 # Set env
 ENV NODE_OPTIONS "--max-old-space-size=4112"
 ENV NODE_ENV prod
 
 # Install packages
+RUN yarn global add snyk
 RUN yarn import
 RUN yarn
 
-# Build it
-RUN yarn run build
+## Build it
+#RUN yarn run build
+#
+## Expose Ports
+#EXPOSE 3000
+#
+## Clean up
+#RUN rm /var/cache/apk/*
+#
+## Set entrypoint to "sh"
+#ENTRYPOINT ["sh"]
 
-# Expose Ports
-EXPOSE 3000
-
-# Clean up
-RUN rm /var/cache/apk/*
-
-# Set entrypoint to "sh"
-ENTRYPOINT ["sh"]
+# Keep alive
+#CMD tail -f /dev/null

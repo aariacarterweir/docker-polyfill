@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONTAINER_NAME=docker-polyfill
+CONTAINER_NAME=polyfill
 IMAGE_NAME=aariacarterweir/polyfill
 LATEST_TAG=latest
 CONTAINER_PORT=3000
