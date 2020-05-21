@@ -28,7 +28,7 @@ ARG POLYFILL_TAG='v4.32.2'
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
 
 # Install npm packages
-RUN npm install
+RUN npm install --unsafe-perm
 RUN export PATH="$(npm bin):${PATH}"
 
 # Build
