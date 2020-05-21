@@ -44,4 +44,4 @@ EXPOSE ${PORT}
 ENTRYPOINT ["npm", "run", "start"]
 
 # Uncomment to debug
-CMD tail -f /dev/null
+#CMD tail -f /dev/null
