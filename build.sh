@@ -30,6 +30,3 @@ if [ "$PUSH" ]; then
         docker push "${IMAGE_NAME}:${VERSION}"
     fi
 fi
-
-# CLEAN UP
-docker system prune --force

@@ -31,6 +31,7 @@ RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/F
 
 # Install npm packages
 RUN npm install
+RUN npm install -g npm-run-all
 
 # Build
 RUN npm run build
