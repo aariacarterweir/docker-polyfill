@@ -30,8 +30,7 @@ ENV PATH="/polyfill/node_modules/.bin/:${PATH}"
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
 
 # Install npm packages
-RUN npm install --production
-RUN npm install -g run-s
+RUN npm install
 
 # Build
 RUN npm run build
