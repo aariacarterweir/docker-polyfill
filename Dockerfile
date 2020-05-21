@@ -27,9 +27,8 @@ ENV NODE_ENV prod
 # Install packages
 RUN yarn import
 RUN yarn
-RUN yarn add grunt-cli
 
-# GRUNT IT UP
+# Build it
 RUN yarn run build
 
 # Expose Ports
