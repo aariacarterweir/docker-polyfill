@@ -4,7 +4,7 @@
 # sh build.sh -v 1.0.11 -p
 
 # CONFIG
-. config.sh
+. util/load-config.sh
 
 # PARSE ARGS
 while getopts pv: option
