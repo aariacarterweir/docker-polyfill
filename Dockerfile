@@ -1,6 +1,10 @@
 # Extend latest alpine image
 FROM alpine:latest
 
+# set env and args
+ENV PORT 3000
+ARG POLYFILL_TAG='v4.33.1'
+
 # update and add packages
 RUN apk update
 RUN apk add --no-cache \
@@ -12,17 +16,13 @@ RUN apk add --no-cache \
 RUN apk add --no-cache --virtual \
     build \
     git \
-    python \
+    python3 \
     make \
     gcc \
     g++
 
 # workdir
 WORKDIR /polyfill
-
-# set eng and args
-ENV PORT 3000
-ARG POLYFILL_TAG='v4.32.2'
 
 # clone repo
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
