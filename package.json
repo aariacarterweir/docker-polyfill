@@ -1,0 +1,8 @@
+{
+  "name": "docker-polyfill-io",
+  "docker-username": "aariacarterweir",
+  "dependencies": {
+    "dockerfile-build-tools": "0.0.7"
+  },
+  "version": "0.0.1"
+}
