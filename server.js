@@ -9,7 +9,7 @@ const [, , action, ...args] = process.argv;
 const ex = (cmd, options = {}) => execSync(cmd, { stdio: 'inherit', ...options });
 
 // load env vars
-dotenv.config({ path: path.resolve(__dirname, '../.polyfill-io.env') });
+dotenv.config({ path: path.resolve(__dirname, '../', '.env') });
 
 // boot up
 if (action === 'up') {
