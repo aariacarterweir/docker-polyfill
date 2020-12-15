@@ -21,3 +21,8 @@ if (action === 'up') {
 if (action === 'down') {
     ex(`docker-compose down ${args.join(' ')}`);
 }
+
+// pull latest image
+if (action === 'pull') {
+    ex('docker pull aariacarterweir/docker-polyfill-io:latest');
+}
