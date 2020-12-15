@@ -4,6 +4,7 @@ FROM alpine:latest
 # set env and args
 ENV PORT 3000
 ARG POLYFILL_TAG='v4.33.1'
+ENV NODE_ENV='production'
 
 # update and add packages
 RUN apk update

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: aariacarterweir/docker-polyfill-io
+    environment:
+      - VIRTUAL_HOST=${HOSTNAME}
+      - LETSENCRYPT_HOST=${HOSTNAME}
+      - NODE_ENV=production
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

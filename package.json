@@ -4,10 +4,14 @@
   "version": "0.9.0",
   "scripts": {
     "build": "dockerfile-build",
+    "server": "node ./server",
+    "up": "yarn server up",
+    "down": "yarn server down",
     "proxy-down": "docker-nginx-global-proxy down"
   },
   "dependencies": {
     "docker-nginx-global-proxy": "0.2.0",
-    "dockerfile-build-tools": "0.0.7"
+    "dockerfile-build-tools": "0.0.7",
+    "dotenv": "8.2.0"
   }
 }
