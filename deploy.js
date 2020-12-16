@@ -3,7 +3,6 @@ const { execSync } = require('child_process');
 const yarnBin = execSync('yarn bin').toString().replace('\n', '');
 
 const commands = [
-    'yarn down',
     'git pull origin master',
     'yarn --non-interactive',
     'yarn pull',
