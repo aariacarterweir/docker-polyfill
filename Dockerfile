@@ -29,7 +29,7 @@ WORKDIR /polyfill
 RUN git clone -b "$POLYFILL_TAG" --single-branch --depth 1 "https://github.com/Financial-Times/polyfill-service.git" .
 
 # Install npm packages
-RUN npm install --unsafe-perm
+RUN npm install --unsafe-perm --production=false
 RUN export PATH="$(npm bin):${PATH}"
 
 # Build
