@@ -3,7 +3,7 @@ FROM alpine:latest
 
 # set env and args
 ENV PORT 3000
-ARG POLYFILL_TAG='v4.33.1'
+ARG POLYFILL_TAG='v4.34.0'
 ENV NODE_ENV='production'
 
 # update and add packages
